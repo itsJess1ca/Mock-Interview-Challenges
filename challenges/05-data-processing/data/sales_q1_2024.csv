@@ -1,0 +1,71 @@
+id,product,category,quantity,price,date,salesperson,region
+1,Gaming Laptop,Electronics,1,1299.99,2024-01-02,John Doe,North
+2,Coffee Mug,Home,25,12.99,2024-01-02,Jane Smith,South
+3,Wireless Headphones,Electronics,3,199.99,2024-01-03,Mike Johnson,East
+4,Yoga Mat,Sports,2,45.99,2024-01-03,Sarah Wilson,West
+5,Cookbook,Books,10,24.99,2024-01-04,Emma Davis,Central
+6,Office Chair,Office,1,299.99,2024-01-04,John Doe,North
+7,Smartphone,Electronics,2,899.99,2024-01-05,Lisa Brown,South
+8,Candle Set,Home,15,19.99,2024-01-05,Mike Johnson,East
+9,,Sports,1,129.99,2024-01-06,Sarah Wilson,West
+10,Mechanical Keyboard,Office,4,149.99,2024-01-06,Emma Davis,Central
+11,Tablet,Electronics,1,549.99,2024-01-07,Jane Smith,South
+12,Picture Frame,Home,8,35.99,2024-01-07,John Doe,North
+13,Basketball,Sports,3,29.99,2024-01-08,Mike Johnson,East
+14,Fiction Novel,Books,20,15.99,2024-01-08,Sarah Wilson,West
+15,Monitor,Electronics,2,279.99,2024-01-09,Lisa Brown,South
+16,Kitchen Knife Set,Home,1,,2024-01-09,Emma Davis,Central
+17,Tennis Racket,Sports,1,159.99,2024-01-10,John Doe,North
+18,Technical Manual,Books,5,49.99,01/10/2024,Jane Smith,South
+19,Desk Lamp,Office,6,39.99,2024-01-11,Mike Johnson,East
+20,Smart Watch,Electronics,1,299.99,2024-01-11,Sarah Wilson,West
+21,Throw Blanket,Home,12,24.99,2024-01-12,Lisa Brown,South
+22,Dumbbells,Sports,2,79.99,2024-01-12,Emma Davis,Central
+23,Notebook Set,Office,30,8.99,2024-01-13,,North
+24,Wireless Mouse,Electronics,-2,49.99,2024-01-13,Jane Smith,South
+25,Scented Candles,Home,18,14.99,2024-01-14,Mike Johnson,East
+26,Hiking Boots,Sports,1,189.99,2024-01-14,Sarah Wilson,West
+27,Children's Book,Books,25,9.99,2024-01-15,Lisa Brown,South
+28,Webcam,Electronics,3,89.99,2024-01-15,Emma Davis,Central
+29,Coffee Table,Home,1,199.99,2024-01-16,John Doe,North
+30,Resistance Bands,Sports,4,19.99,2024-01-16,Jane Smith,South
+31,Gaming Laptop,Electronics,2,1299.99,2024-02-01,John Doe,North
+32,Coffee Mug,Home,30,12.99,2024-02-01,Jane Smith,South
+33,Wireless Headphones,Electronics,5,199.99,2024-02-02,Mike Johnson,East
+34,Yoga Mat,Sports,3,45.99,2024-02-02,Sarah Wilson,West
+35,Cookbook,Books,15,24.99,2024-02-03,Emma Davis,Central
+36,Office Chair,Office,2,299.99,2024-02-03,John Doe,North
+37,Smartphone,Electronics,3,899.99,2024-02-04,Lisa Brown,South
+38,Candle Set,Home,20,19.99,2024-02-04,Mike Johnson,East
+39,Running Shoes,Sports,2,129.99,2024-02-05,Sarah Wilson,West
+40,Mechanical Keyboard,Office,6,149.99,2024-02-05,Emma Davis,Central
+41,Tablet,Electronics,2,549.99,2024-02-06,jane smith,south
+42,Picture Frame,Home,12,35.99,2024-02-06,John Doe,North
+43,Basketball,Sports,4,29.99,2024-13-07,Mike Johnson,East
+44,Fiction Novel,Books,25,15.99,2024-02-07,Sarah Wilson,West
+45,Monitor,Electronics,3,279.99,2024-02-08,Lisa Brown,South
+46,Kitchen Knife Set,Home,2,89.99,2024-02-08,Emma Davis,Central
+47,Tennis Racket,Sports,2,159.99,2024-02-09,John Doe,North
+48,Technical Manual,Books,8,49.99,2024-02-09,Jane Smith,South
+49,Desk Lamp,Office,8,39.99,2024-02-10,Mike Johnson,East
+50,Smart Watch,Electronics,2,299.99,2024-02-10,Sarah Wilson,West
+51,Gaming Laptop,Electronics,3,1299.99,2024-03-01,John Doe,North
+52,Coffee Mug,Home,35,12.99,2024-03-01,Jane Smith,South
+53,Wireless Headphones,Electronics,7,199.99,2024-03-02,Mike Johnson,East
+54,Yoga Mat,Sports,4,45.99,2024-03-02,Sarah Wilson,West
+55,Cookbook,Books,20,24.99,2024-03-03,Emma Davis,Central
+56,Office Chair,Office,3,299.99,2024-03-03,John Doe,North
+57,Smartphone,Electronics,4,899.99,2024-03-04,Lisa Brown,South
+58,Candle Set,Home,25,19.99,2024-03-04,Mike Johnson,East
+59,Running Shoes,Sports,3,129.99,2024-03-05,Sarah Wilson,West
+60,Mechanical Keyboard,Office,8,149.99,2024-03-05,Emma Davis,Central
+61,Tablet,Electronics,3,549.99,2024-03-06,Jane Smith,South
+62,Picture Frame,Home,15,35.99,2024-03-06,John Doe,North
+63,Basketball,Sports,5,29.99,2024-03-07,Mike Johnson,East
+64,Fiction Novel,Books,30,15.99,2024-03-07,Sarah Wilson,West
+65,Monitor,Electronics,4,279.99,2024-03-08,Lisa Brown,South
+66,Kitchen Knife Set,Home,3,89.99,2024-03-08,Emma Davis,Central
+67,Tennis Racket,Sports,3,159.99,2024-03-09,John Doe,North
+68,Technical Manual,Books,10,49.99,2024-03-09,Jane Smith,South
+69,Desk Lamp,,10,39.99,2024-03-10,Mike Johnson,East
+70,Smart Watch,Electronics,3,299.99,2024-03-10,Sarah Wilson,WEST

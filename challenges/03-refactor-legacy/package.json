@@ -1,0 +1,17 @@
+{
+  "name": "refactor-legacy-challenge",
+  "version": "1.0.0",
+  "description": "Refactor legacy calculator code challenge",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts"
+  },
+  "keywords": ["refactoring", "legacy", "typescript", "clean-code"],
+  "author": "",
+  "license": "MIT"
+}
