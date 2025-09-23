@@ -50,6 +50,14 @@ export class Connect4Game {
     throw new Error('Method not implemented');
   }
 
+  private getColumnCells(column: number): Cell[] {
+    // Helper method to get all cells in a column
+    return this.board.reduce((col, row) => {
+      col.push(row[column]);
+      return col;
+    }, []);
+  }
+
   private checkWin(lastMove: Position): boolean {
     // TODO: Implement win checking logic
     // Check horizontal, vertical, and diagonal lines
@@ -57,12 +65,18 @@ export class Connect4Game {
     throw new Error('Method not implemented');
   }
 
-  private checkDirection(
-    position: Position,
-    deltaRow: number,
-    deltaCol: number
-  ): boolean {
-    // TODO: Check for 4 in a row in a specific direction
+  private checkHorizontalWin(lastMove: Position): boolean {
+    // TODO: Check for 4 in a row horizontally
+    throw new Error('Method not implemented');
+  }
+
+  private checkVerticalWin(lastMove: Position): boolean {
+    // TODO: Check for 4 in a row vertically
+    throw new Error('Method not implemented');
+  }
+
+  private checkDiagonalWin(lastMove: Position): boolean {
+    // TODO: Check for 4 in a row diagonally (both directions)
     throw new Error('Method not implemented');
   }
 

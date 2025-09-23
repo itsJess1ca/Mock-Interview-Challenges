@@ -1,6 +1,7 @@
 import { Connect4Game } from './connect4';
 import { GameDisplay } from './display';
 import { InputHandler } from './input';
+import { CounterIcons } from './types';
 
 class GameController {
   private game: Connect4Game;
