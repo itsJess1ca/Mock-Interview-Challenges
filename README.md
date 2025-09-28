@@ -1,6 +1,6 @@
 # TypeScript Interview Challenges
 
-A collection of coding challenges designed for junior developer interviews. Each challenge tests different skills while maintaining realistic complexity and time expectations.
+A collection of coding challenges designed for junior-mid level interviews. Each challenge tests different skills while maintaining realistic complexity and time expectations.
 
 ## 🚀 Quick Start
 
