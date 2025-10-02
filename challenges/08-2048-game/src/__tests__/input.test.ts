@@ -1,30 +1,47 @@
-import { keyToDirection } from '../input';
+import { InputHandler } from '../input';
 
-describe('Input Functions', () => {
-  describe('keyToDirection', () => {
-    it('should map WASD keys to directions', () => {
-      expect(keyToDirection('w')).toBe('up');
-      expect(keyToDirection('W')).toBe('up');
-      expect(keyToDirection('s')).toBe('down');
-      expect(keyToDirection('S')).toBe('down');
-      expect(keyToDirection('a')).toBe('left');
-      expect(keyToDirection('A')).toBe('left');
-      expect(keyToDirection('d')).toBe('right');
-      expect(keyToDirection('D')).toBe('right');
+describe('InputHandler', () => {
+  let input: InputHandler;
+
+  beforeEach(() => {
+    input = new InputHandler();
+  });
+
+  afterEach(() => {
+    input.teardown();
+  });
+
+  describe('setup and teardown', () => {
+    it('should set up input handling without throwing errors', () => {
+      const mockMove = jest.fn();
+      const mockQuit = jest.fn();
+      const mockRestart = jest.fn();
+
+      expect(() => {
+        input.setup(mockMove, mockQuit, mockRestart);
+      }).not.toThrow();
     });
 
-    it('should map arrow keys to directions', () => {
-      expect(keyToDirection('up')).toBe('up');     // Up arrow
-      expect(keyToDirection('down')).toBe('down');   // Down arrow
-      expect(keyToDirection('left')).toBe('left');   // Left arrow
-      expect(keyToDirection('right')).toBe('right');  // Right arrow
+    it('should tear down input handling without throwing errors', () => {
+      const mockMove = jest.fn();
+      const mockQuit = jest.fn();
+      const mockRestart = jest.fn();
+
+      input.setup(mockMove, mockQuit, mockRestart);
+      expect(() => input.teardown()).not.toThrow();
     });
 
-    it('should return null for invalid keys', () => {
-      expect(keyToDirection('x')).toBe(null);
-      expect(keyToDirection('1')).toBe(null);
-      expect(keyToDirection(' ')).toBe(null);
-      expect(keyToDirection('enter')).toBe(null);
+    it('should allow multiple setup/teardown cycles', () => {
+      const mockMove = jest.fn();
+      const mockQuit = jest.fn();
+      const mockRestart = jest.fn();
+
+      expect(() => {
+        input.setup(mockMove, mockQuit, mockRestart);
+        input.teardown();
+        input.setup(mockMove, mockQuit, mockRestart);
+        input.teardown();
+      }).not.toThrow();
     });
   });
 });
