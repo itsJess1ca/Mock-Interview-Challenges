@@ -1,21 +1,18 @@
 import { Game2048 } from './game2048';
-import {
-  displayGameState,
-  displayInstructions,
-  clearScreen,
-  displayWinMessage,
-  displayGameOverMessage,
-  displayBoard,
-} from './display';
-import { setupInput, teardownInput, enableRawMode, disableRawMode, keyToDirection, isSpecialCommand } from './input';
+import { DisplayManager } from './display';
+import { InputHandler } from './input';
 import { Direction } from './types';
 
 class GameController {
   private game: Game2048;
+  private display: DisplayManager;
+  private input: InputHandler;
   private isRunning: boolean;
 
   constructor() {
     this.game = new Game2048();
+    this.display = new DisplayManager();
+    this.input = new InputHandler();
     this.isRunning = false;
   }
 
@@ -27,8 +24,8 @@ class GameController {
     // 2. Set up input handling
     // 3. Start the game loop
     // 4. Handle cleanup on exit
-    this.showInitialState()
-    setupInput(
+    this.showInitialState();
+    this.input.setup(
       this.handleMove.bind(this),
       this.handleQuit.bind(this),
       this.handleRestart.bind(this)
@@ -44,16 +41,16 @@ class GameController {
   }
 
   private handleRestart(): void {
-    clearScreen();
-    teardownInput();
+    this.display.clear();
+    this.input.teardown();
     this.game = new Game2048();
     this.isRunning = false;
     this.start();
   }
 
   private handleQuit(): void {
-    teardownInput();
-    displayGameOverMessage();
+    this.input.teardown();
+    this.display.showGameOverMessage();
     process.exit();
   }
 
@@ -62,8 +59,8 @@ class GameController {
    */
   private updateDisplay(): void {
     // Clear screen and show current game state
-    clearScreen();
-    displayGameState(this.game.getGameState());
+    this.display.clear();
+    this.display.showGameState(this.game.getGameState());
   }
 
   /**
@@ -77,8 +74,8 @@ class GameController {
    * Display initial game state
    */
   private showInitialState(): void {
-    displayInstructions();
-    displayGameState(this.game.getGameState());
+    this.display.showInstructions();
+    this.display.showGameState(this.game.getGameState());
   }
 }
 
@@ -91,14 +88,15 @@ function main(): void {
 }
 
 // Handle process termination gracefully
+const input = new InputHandler();
 process.on('SIGINT', () => {
-  teardownInput();
+  input.teardown();
   console.log('\n👋 Thanks for playing 2048!');
   process.exit(0);
 });
 
 process.on('SIGTERM', () => {
-  teardownInput();
+  input.teardown();
   process.exit(0);
 });
 
