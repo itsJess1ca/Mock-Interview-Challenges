@@ -35,35 +35,41 @@ npm test       # Run tests to see what needs implementation
 
 ### Core Game Logic (`src/game2048.ts`)
 
-You need to implement **5 key methods**:
+You need to implement **ALL methods** in the Game2048 class:
 
-#### 1. `moveAndMergeRow(row)` - The Heart of 2048
-Slide and merge tiles in a single row/column:
-```typescript
-// Example: [2, 0, 2, 4] → [4, 4, 0, 0]
-// Example: [2, 2, 2, 2] → [4, 4, 0, 0] (merge once per tile!)
-```
+#### Board Management
+1. **`createEmptyBoard()`** - Create a 4x4 board filled with zeros
+2. **`addRandomTile()`** - Add a random tile (2 or 4, with 90%/10% probability)
+3. **`getBoard()`** - Return a copy of the current board
+4. **`setBoardForTesting()`** - Set board state (already implemented for testing)
 
-#### 2. `moveTiles(direction)` - Apply Movement
-Handle all four directions (left, right, up, down):
-- Process each row/column using `moveAndMergeRow`
-- Track score gains from merges
-- Return new board state and whether anything moved
+#### Core Game Mechanics
+5. **`moveAndMergeRow(row)`** - The heart of 2048!
+   - Slide and merge tiles in a single row/column
+   - Example: `[2, 0, 2, 4] → [4, 4, 0, 0]`
+   - **Critical:** `[2, 2, 2, 2] → [4, 4, 0, 0]` (merge once per tile!)
 
-#### 3. `makeMove(direction)` - Complete Move Logic
-Coordinate a full game move:
-- Apply tile movement using `moveTiles`
-- Add a new random tile if the board changed
-- Check for win condition (2048 reached)
-- Return complete move result
+6. **`moveTiles(direction)`** - Apply movement in all directions
+   - Handle left, right, up, down
+   - Use `moveAndMergeRow` for each row/column
+   - Track score gains and board changes
 
-#### 4. `checkWin()` - Detect Victory
-Check if any cell contains the WIN_TILE (2048)
+7. **`makeMove(direction)`** - Complete move coordination
+   - Apply movement using `moveTiles`
+   - Add new random tile if board changed
+   - Check win condition
+   - Return move result
 
-#### 5. `canMove()` - Detect Game Over (Partial TODO)
-Currently only checks for empty cells. You need to add:
-- Check for horizontally adjacent mergeable tiles
-- Check for vertically adjacent mergeable tiles
+#### Game State
+8. **`canMove()`** - Check if any moves are possible
+   - Empty cells exist? OR
+   - Adjacent tiles can merge?
+
+9. **`isGameOver()`** - Detect game over
+10. **`checkWin()`** - Check for 2048 tile
+11. **`getGameState()`** - Return complete game state
+12. **`getScore()`** - Return current score
+13. **`reset()`** - Reset game to initial state
 
 ## Game Rules
 
@@ -88,15 +94,35 @@ Currently only checks for empty cells. You need to add:
 ## Implementation Tips
 
 ### Recommended Order
-1. **Start with `moveAndMergeRow()`** - This is the core algorithm
-   - Test it thoroughly with the provided tests
-   - Handle edge cases: [2,2,2,2] should become [4,4,0,0]
-2. **Implement `moveTiles()`** - Apply the row logic to all directions
-   - Left/Right: Apply directly to rows
-   - Up/Down: Extract columns, apply logic, put back
-3. **Complete `makeMove()`** - Tie everything together
-4. **Add `checkWin()`** - Simple board scan for 2048
-5. **Finish `canMove()`** - Complete the adjacent tile checks
+1. **Start with basic utilities:**
+   - `createEmptyBoard()` - Simple 2D array creation
+   - `getBoard()` - Return a copy (use `.map()`)
+   - `getScore()` - Simple getter
+
+2. **Add random tile logic:**
+   - `addRandomTile()` - Find empty cells, place 2 (90%) or 4 (10%)
+
+3. **Build the core algorithm:**
+   - `moveAndMergeRow()` - The heart of 2048! Test thoroughly.
+   - Handle edge case: `[2,2,2,2] → [4,4,0,0]`
+
+4. **Apply to all directions:**
+   - `moveTiles()` - Use `moveAndMergeRow` for all 4 directions
+   - Left/Right: Process rows directly
+   - Up/Down: Extract columns, process, put back
+
+5. **Complete move logic:**
+   - `makeMove()` - Coordinate everything
+   - Add random tile after valid moves
+
+6. **Game state checks:**
+   - `checkWin()` - Scan for 2048
+   - `canMove()` - Empty cells OR adjacent tiles can merge
+   - `isGameOver()` - Just call `!canMove()`
+   - `getGameState()` - Return complete state object
+
+7. **Polish:**
+   - `reset()` - Clear board and start fresh
 
 ### Core Algorithm Strategy
 The sliding/merging algorithm is the heart of 2048:

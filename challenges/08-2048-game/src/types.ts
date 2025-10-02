@@ -25,19 +25,3 @@ export interface MoveResult {
 export const BOARD_SIZE = 4;
 export const WIN_TILE = 2048;
 export const EMPTY_CELL = 0;
-
-export const TileColors = {
-  0: '⬜',
-  2: '🟫',
-  4: '🟤',
-  8: '🟠',
-  16: '🟡',
-  32: '🟢',
-  64: '🔵',
-  128: '🟣',
-  256: '🔴',
-  512: '⚫',
-  1024: '⚪',
-  2048: '🏆',
-  4096: '💎'
-} as const;

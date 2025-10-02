@@ -17,9 +17,9 @@ export class Game2048 {
    * Create a 4x4 board filled with empty cells (0)
    */
   private createEmptyBoard(): Board {
+    // TODO: Implement this function
     // Return a 4x4 array filled with EMPTY_CELL (0)
-    return [...new Array(BOARD_SIZE)]
-      .map(r => [...new Array(BOARD_SIZE)].map(e => EMPTY_CELL))
+    throw new Error('Not implemented');
   }
 
   /**
@@ -27,21 +27,13 @@ export class Game2048 {
    * 90% chance for 2, 10% chance for 4
    */
   addRandomTile(): boolean {
-    const emptyCells: Position[] = [];
-    for (let row = 0; row < this.board.length; row++) {
-      for (let col = 0; col < this.board[row].length; col++) {
-        const cell = this.board[row][col];
-        if (cell === EMPTY_CELL) {
-          emptyCells.push({ row, col })
-        }
-      }
-    }
-    if (emptyCells.length === 0) return false;
-    const randomIndex = Math.floor(Math.random() * emptyCells.length);
-    const cellValue = Math.random() > 0.9 ? 4 : 2;  // 90% chance for 2, 10% chance for 4
-    const position = emptyCells[randomIndex];
-    this.board[position.row][position.col] = cellValue;
-    return true;
+    // TODO: Implement this function
+    // 1. Find all empty cells on the board
+    // 2. If no empty cells, return false
+    // 3. Pick a random empty cell
+    // 4. Place a tile with value 2 (90% chance) or 4 (10% chance)
+    // 5. Return true
+    throw new Error('Not implemented');
   }
 
   /**
@@ -93,25 +85,19 @@ export class Game2048 {
    * Check if there are any valid moves available
    */
   canMove(): boolean {
+    // TODO: Implement this function
     // 1. Check if there are empty cells
-    for (let row = 0; row < BOARD_SIZE; row++) {
-      for (let col = 0; col < BOARD_SIZE; col++) {
-        if (this.board[row][col] === EMPTY_CELL) {
-          return true;
-        }
-      }
-    }
-
-    // TODO: 2. Check if any adjacent cells can be merged
-    // Check horizontally and vertically for matching adjacent tiles
-    return false;
+    // 2. Check if any adjacent cells can be merged (horizontally and vertically)
+    throw new Error('Not implemented');
   }
 
   /**
    * Check if the game is over (no moves available)
    */
   isGameOver(): boolean {
-    return !this.canMove();
+    // TODO: Implement this function
+    // Return true if no moves are available
+    throw new Error('Not implemented');
   }
 
   /**
@@ -127,38 +113,36 @@ export class Game2048 {
    * Get the current game state
    */
   getGameState(): GameState {
-    return {
-      board: this.board.map(row => [...row]),
-      score: this.score,
-      isGameOver: this.isGameOver(),
-      hasWon: this.hasWon,
-      canMove: this.canMove()
-    };
+    // TODO: Implement this function
+    // Return an object with: board (copy), score, isGameOver, hasWon, canMove
+    throw new Error('Not implemented');
   }
 
   /**
    * Reset the game to initial state
    */
   reset(): void {
-    this.board = this.createEmptyBoard();
-    this.score = 0;
-    this.hasWon = false;
-    this.addRandomTile();
-    this.addRandomTile();
+    // TODO: Implement this function
+    // Reset board, score, hasWon, and add two random tiles
+    throw new Error('Not implemented');
   }
 
   /**
    * Get the current score
    */
   getScore(): number {
-    return this.score;
+    // TODO: Implement this function
+    // Return the current score
+    throw new Error('Not implemented');
   }
 
   /**
    * Get a copy of the current board
    */
   getBoard(): Board {
-    return this.board.map(row => [...row]);
+    // TODO: Implement this function
+    // Return a deep copy of the board (not the original reference)
+    throw new Error('Not implemented');
   }
 
   /**

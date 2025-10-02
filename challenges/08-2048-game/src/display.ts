@@ -1,4 +1,4 @@
-import { Board, GameState, TileColors, CellValue } from './types';
+import { Board, GameState, CellValue } from './types';
 
 /**
  * Display the current board state in a formatted way
@@ -106,13 +106,6 @@ export function displayWinMessage(): void {
 export function displayGameOverMessage(): void {
   console.log('💀 Game Over! No more moves available.');
   console.log('Press R to restart or Q to quit.');
-}
-
-/**
- * Get the visual representation of a tile
- */
-export function getTileDisplay(value: CellValue): string {
-  return TileColors[value] || '❓';
 }
 
 /**
