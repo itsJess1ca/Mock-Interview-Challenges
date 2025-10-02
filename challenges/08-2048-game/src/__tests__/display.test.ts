@@ -1,40 +1,25 @@
-import { displayBoard, displayGameState, formatCellValue } from '../display';
-import { GameState, EMPTY_CELL, Board } from '../types';
+import { DisplayManager } from '../display';
+import { GameState, Board } from '../types';
 
 // Mock console.log for testing
 const mockConsoleLog = jest.spyOn(console, 'log').mockImplementation();
+const mockConsoleClear = jest.spyOn(console, 'clear').mockImplementation();
 
-describe('Display Functions', () => {
+describe('DisplayManager', () => {
+  let display: DisplayManager;
+
   beforeEach(() => {
+    display = new DisplayManager();
     mockConsoleLog.mockClear();
+    mockConsoleClear.mockClear();
   });
 
   afterAll(() => {
     mockConsoleLog.mockRestore();
+    mockConsoleClear.mockRestore();
   });
 
-  describe('formatCellValue', () => {
-    it('should format empty cells correctly', () => {
-      const result = formatCellValue(EMPTY_CELL);
-      expect(typeof result).toBe('string');
-      expect(result.length).toBeGreaterThan(0); // Should return some string representation
-    });
-
-    it('should format number cells with proper padding', () => {
-      expect(formatCellValue(2)).toMatch(/^\s*2\s*$/);
-      expect(formatCellValue(2048)).toMatch(/^\s*2048\s*$/);
-    });
-
-    it('should handle all valid cell values', () => {
-      const validValues = [0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096];
-
-      validValues.forEach(value => {
-        expect(() => formatCellValue(value as any)).not.toThrow();
-      });
-    });
-  });
-
-  describe('displayBoard', () => {
+  describe('showBoard', () => {
     it('should display a board without throwing errors', () => {
       const board: Board = [
         [2, 4, 0, 0],
@@ -43,7 +28,7 @@ describe('Display Functions', () => {
         [0, 0, 0, 128]
       ];
 
-      expect(() => displayBoard(board)).not.toThrow();
+      expect(() => display.showBoard(board)).not.toThrow();
       expect(mockConsoleLog).toHaveBeenCalled();
     });
 
@@ -55,7 +40,7 @@ describe('Display Functions', () => {
         [0, 0, 0, 0]
       ];
 
-      expect(() => displayBoard(emptyBoard)).not.toThrow();
+      expect(() => display.showBoard(emptyBoard)).not.toThrow();
     });
 
     it('should display a full board', () => {
@@ -66,11 +51,27 @@ describe('Display Functions', () => {
         [2, 4, 8, 16]
       ];
 
-      expect(() => displayBoard(fullBoard)).not.toThrow();
+      expect(() => display.showBoard(fullBoard)).not.toThrow();
+    });
+
+    it('should include box drawing characters', () => {
+      const board: Board = [
+        [2, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ];
+
+      display.showBoard(board);
+
+      // Check that box drawing characters are used
+      const calls = mockConsoleLog.mock.calls.map(call => call[0]);
+      expect(calls.some(call => call.includes('┌'))).toBe(true);
+      expect(calls.some(call => call.includes('└'))).toBe(true);
     });
   });
 
-  describe('displayGameState', () => {
+  describe('showGameState', () => {
     it('should display game state without throwing errors', () => {
       const gameState: GameState = {
         board: [
@@ -85,8 +86,28 @@ describe('Display Functions', () => {
         canMove: true
       };
 
-      expect(() => displayGameState(gameState)).not.toThrow();
+      expect(() => display.showGameState(gameState)).not.toThrow();
       expect(mockConsoleLog).toHaveBeenCalled();
+    });
+
+    it('should display score', () => {
+      const gameState: GameState = {
+        board: [
+          [2, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0]
+        ],
+        score: 1234,
+        isGameOver: false,
+        hasWon: false,
+        canMove: true
+      };
+
+      display.showGameState(gameState);
+
+      const calls = mockConsoleLog.mock.calls.map(call => call[0]);
+      expect(calls.some(call => call.includes('1234'))).toBe(true);
     });
 
     it('should display win state correctly', () => {
@@ -103,7 +124,9 @@ describe('Display Functions', () => {
         canMove: true
       };
 
-      expect(() => displayGameState(winState)).not.toThrow();
+      expect(() => display.showGameState(winState)).not.toThrow();
+      const calls = mockConsoleLog.mock.calls.map(call => call[0]);
+      expect(calls.some(call => call.includes('Congratulations'))).toBe(true);
     });
 
     it('should display game over state correctly', () => {
@@ -120,7 +143,53 @@ describe('Display Functions', () => {
         canMove: false
       };
 
-      expect(() => displayGameState(gameOverState)).not.toThrow();
+      expect(() => display.showGameState(gameOverState)).not.toThrow();
+      const calls = mockConsoleLog.mock.calls.map(call => call[0]);
+      expect(calls.some(call => call.includes('Game Over'))).toBe(true);
+    });
+  });
+
+  describe('showInstructions', () => {
+    it('should display instructions without throwing errors', () => {
+      expect(() => display.showInstructions()).not.toThrow();
+      expect(mockConsoleLog).toHaveBeenCalled();
+    });
+
+    it('should include control information', () => {
+      display.showInstructions();
+
+      const calls = mockConsoleLog.mock.calls.map(call => call[0]);
+      const allOutput = calls.join(' ');
+      expect(allOutput).toMatch(/WASD|arrow/i);
+      expect(allOutput).toMatch(/quit|Q/i);
+      expect(allOutput).toMatch(/restart|R/i);
+    });
+  });
+
+  describe('clear', () => {
+    it('should call console.clear', () => {
+      display.clear();
+      expect(mockConsoleClear).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('showWinMessage', () => {
+    it('should display win message', () => {
+      display.showWinMessage();
+
+      const calls = mockConsoleLog.mock.calls.map(call => call[0]);
+      const allOutput = calls.join(' ');
+      expect(allOutput).toMatch(/congratulations|2048/i);
+    });
+  });
+
+  describe('showGameOverMessage', () => {
+    it('should display game over message', () => {
+      display.showGameOverMessage();
+
+      const calls = mockConsoleLog.mock.calls.map(call => call[0]);
+      const allOutput = calls.join(' ');
+      expect(allOutput).toMatch(/game over|no more moves/i);
     });
   });
 });
