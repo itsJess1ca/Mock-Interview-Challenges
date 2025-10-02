@@ -1,21 +1,47 @@
 import { Direction } from './types';
 import readline from "node:readline";
-readline.emitKeypressEvents(process.stdin);
+
+type KeypressListener = (str: string, key: readline.Key) => void;
+let keypressListener: KeypressListener | null = null;
+let isKeypressEventsEnabled = false;
 
 /**
  * Set up input handling for the game
  */
 export function setupInput(onMove: (direction: Direction) => void, onQuit: () => void, onRestart: () => void): void {
+  // Enable keypress events if not already enabled
+  if (!isKeypressEventsEnabled) {
+    readline.emitKeypressEvents(process.stdin);
+    isKeypressEventsEnabled = true;
+  }
+
   enableRawMode();
-  process.stdin.on('keypress', (str, key) => {
+
+  keypressListener = (str: string, key: readline.Key) => {
+    if (!key?.sequence) return;
     if (handleCtrlC(key.sequence)) {
       onQuit();
+      return;
     }
+    if (!key?.name) return;
     const direction = keyToDirection(key.name);
     if (direction) onMove(direction);
     if (str === "q") onQuit();
     if (str === "r") onRestart();
-  });
+  };
+
+  process.stdin.on('keypress', keypressListener);
+}
+
+/**
+ * Tear down input handling
+ */
+export function teardownInput(): void {
+  if (keypressListener) {
+    process.stdin.removeListener('keypress', keypressListener);
+    keypressListener = null;
+  }
+  disableRawMode();
 }
 
 /**
@@ -79,13 +105,4 @@ export function disableRawMode(): void {
  */
 export function handleCtrlC(key: string): boolean {
   return key === '\u0003'; // Ctrl+C
-}
-
-/**
- * Parse multi-character escape sequences (like arrow keys)
- */
-export function parseEscapeSequence(key: string): string {
-  // TODO: Handle escape sequences for arrow keys
-  // Some terminals send multi-character sequences for special keys
-  return key;
 }

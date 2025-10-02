@@ -1,6 +1,13 @@
 import { Game2048 } from './game2048';
-import { displayGameState, displayInstructions, clearScreen, displayWinMessage, displayGameOverMessage } from './display';
-import { setupInput, enableRawMode, disableRawMode, keyToDirection, isSpecialCommand } from './input';
+import {
+  displayGameState,
+  displayInstructions,
+  clearScreen,
+  displayWinMessage,
+  displayGameOverMessage,
+  displayBoard,
+} from './display';
+import { setupInput, teardownInput, enableRawMode, disableRawMode, keyToDirection, isSpecialCommand } from './input';
 import { Direction } from './types';
 
 class GameController {
@@ -16,16 +23,15 @@ class GameController {
    * Start the game
    */
   start(): void {
-    // TODO: Implement this function
     // 1. Show instructions
     // 2. Set up input handling
     // 3. Start the game loop
     // 4. Handle cleanup on exit
-    displayInstructions()
+    this.showInitialState()
     setupInput(
-      this.handleMove,
-      this.handleQuit,
-      this.handleRestart
+      this.handleMove.bind(this),
+      this.handleQuit.bind(this),
+      this.handleRestart.bind(this)
     );
   }
 
@@ -33,30 +39,20 @@ class GameController {
    * Handle player move
    */
   private handleMove(direction: Direction): void {
-    // TODO: Implement this function
-    // 1. Make the move
-    // 2. Update display
-    // 3. Check for win/game over conditions
-    throw new Error('Not implemented');
+    this.game.makeMove(direction);
+    this.updateDisplay();
   }
 
-  /**
-   * Handle game restart
-   */
   private handleRestart(): void {
-    // TODO: Implement this function
-    // Reset the game and update display
+    clearScreen();
+    teardownInput();
     this.game = new Game2048();
     this.isRunning = false;
     this.start();
   }
 
-  /**
-   * Handle game quit
-   */
   private handleQuit(): void {
-    // TODO: Implement this function
-    // Clean up and exit
+    teardownInput();
     displayGameOverMessage();
     process.exit();
   }
@@ -65,21 +61,9 @@ class GameController {
    * Update the game display
    */
   private updateDisplay(): void {
-    // TODO: Implement this function
     // Clear screen and show current game state
-    throw new Error('Not implemented');
-  }
-
-  /**
-   * Handle key input
-   */
-  private handleInput(key: string): void {
-    // TODO: Implement this function
-    // Process keyboard input and call appropriate handlers
-    // 1. Check for special commands (quit/restart)
-    // 2. Convert key to direction
-    // 3. Handle move if valid direction
-    throw new Error('Not implemented');
+    clearScreen();
+    displayGameState(this.game.getGameState());
   }
 
   /**
@@ -93,9 +77,8 @@ class GameController {
    * Display initial game state
    */
   private showInitialState(): void {
-    // TODO: Implement this function
-    // Show instructions and initial board
-    throw new Error('Not implemented');
+    displayInstructions();
+    displayGameState(this.game.getGameState());
   }
 }
 
@@ -109,13 +92,13 @@ function main(): void {
 
 // Handle process termination gracefully
 process.on('SIGINT', () => {
-  disableRawMode();
+  teardownInput();
   console.log('\n👋 Thanks for playing 2048!');
   process.exit(0);
 });
 
 process.on('SIGTERM', () => {
-  disableRawMode();
+  teardownInput();
   process.exit(0);
 });
 

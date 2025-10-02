@@ -17,6 +17,22 @@ export function displayBoard(board: Board): void {
   // ├────┼────┼────┼────┤
   // │ 4  │ 2  │ 4  │ 2  │
   // └────┴────┴────┴────┘
+  console.log('┌────┬────┬────┬────┐');
+  let isFirst = true;
+  for (const row of board) {
+    if (!isFirst) console.log('├────┼────┼────┼────┤');
+    let rowStr = '│';
+    const cellValues: string[] = [];
+    for (const cell of row) {
+      cellValues.push(formatCellValue(cell));
+    }
+
+    rowStr += cellValues.join('│');
+    rowStr += '│';
+    console.log(rowStr);
+    isFirst = false;
+  }
+  console.log('└────┴────┴────┴────┘')
 }
 
 /**
@@ -24,8 +40,15 @@ export function displayBoard(board: Board): void {
  */
 export function displayGameState(gameState: GameState): void {
   // TODO: Implement this function
-  // Display score, game status, and the board
-  throw new Error('Not implemented');
+  displayBoard(gameState.board);
+  if (gameState.hasWon) {
+    displayWinMessage()
+    return;
+  }
+  if (gameState.isGameOver) {
+    displayGameOverMessage();
+  }
+  console.log(`Score: ${gameState.score} | Status: ${gameState.isGameOver}`);
 }
 
 /**
@@ -60,11 +83,13 @@ export function clearScreen(): void {
 /**
  * Format a cell value for display
  */
-export function formatCellValue(value: CellValue): string {
-  // TODO: Implement this function
-  // Format the cell value for nice display
-  // Empty cells should show as spaces, numbers should be padded
-  throw new Error('Not implemented');
+export function formatCellValue(cell: CellValue): string {
+  let value = cell.toString();
+  if (value.length === 4) {
+    return value;
+  }
+  if (value === '0') value = ' ';
+  return ` ${value.padEnd(3, ' ')}`;
 }
 
 /**

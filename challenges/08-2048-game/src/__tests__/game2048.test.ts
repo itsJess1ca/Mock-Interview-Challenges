@@ -252,4 +252,265 @@ describe('Game2048', () => {
       expect(currentBoard[2][2]).toBe(2048);
     });
   });
+
+  describe('movement in all directions', () => {
+    describe('left movement', () => {
+      it('should slide tiles left', () => {
+        game.setBoardForTesting([
+          [0, 2, 0, 4],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0]
+        ]);
+
+        game.makeMove('left');
+        const board = game.getBoard();
+
+        expect(board[0][0]).toBe(2);
+        expect(board[0][1]).toBe(4);
+        expect(board[0][2]).toBe(0);
+        expect(board[0][3]).toBe(0);
+      });
+
+      it('should merge tiles moving left', () => {
+        game.setBoardForTesting([
+          [2, 2, 4, 4],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0]
+        ]);
+
+        const result = game.makeMove('left');
+        const board = game.getBoard();
+
+        expect(board[0][0]).toBe(4);
+        expect(board[0][1]).toBe(8);
+        expect(result.score).toBeGreaterThan(0);
+      });
+
+      it('should merge only once per move [2,2,2,2] -> [4,4,0,0]', () => {
+        game.setBoardForTesting([
+          [2, 2, 2, 2],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0]
+        ]);
+
+        game.makeMove('left');
+        const board = game.getBoard();
+
+        expect(board[0][0]).toBe(4);
+        expect(board[0][1]).toBe(4);
+        expect(board[0][2]).toBe(0);
+        expect(board[0][3]).toBe(0);
+      });
+    });
+
+    describe('right movement', () => {
+      it('should slide tiles right', () => {
+        game.setBoardForTesting([
+          [2, 0, 4, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0]
+        ]);
+
+        game.makeMove('right');
+        const board = game.getBoard();
+
+        expect(board[0][0]).toBe(0);
+        expect(board[0][1]).toBe(0);
+        expect(board[0][2]).toBe(2);
+        expect(board[0][3]).toBe(4);
+      });
+
+      it('should merge tiles moving right', () => {
+        game.setBoardForTesting([
+          [2, 2, 4, 4],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0]
+        ]);
+
+        game.makeMove('right');
+        const board = game.getBoard();
+
+        expect(board[0][2]).toBe(4);
+        expect(board[0][3]).toBe(8);
+      });
+    });
+
+    describe('up movement', () => {
+      it('should slide tiles up', () => {
+        game.setBoardForTesting([
+          [0, 0, 0, 0],
+          [2, 0, 0, 0],
+          [0, 0, 0, 0],
+          [4, 0, 0, 0]
+        ]);
+
+        game.makeMove('up');
+        const board = game.getBoard();
+
+        expect(board[0][0]).toBe(2);
+        expect(board[1][0]).toBe(4);
+        expect(board[2][0]).toBe(0);
+        expect(board[3][0]).toBe(0);
+      });
+
+      it('should merge tiles moving up', () => {
+        game.setBoardForTesting([
+          [2, 0, 0, 0],
+          [2, 0, 0, 0],
+          [4, 0, 0, 0],
+          [4, 0, 0, 0]
+        ]);
+
+        game.makeMove('up');
+        const board = game.getBoard();
+
+        expect(board[0][0]).toBe(4);
+        expect(board[1][0]).toBe(8);
+      });
+    });
+
+    describe('down movement', () => {
+      it('should slide tiles down', () => {
+        game.setBoardForTesting([
+          [2, 0, 0, 0],
+          [0, 0, 0, 0],
+          [4, 0, 0, 0],
+          [0, 0, 0, 0]
+        ]);
+
+        game.makeMove('down');
+        const board = game.getBoard();
+
+        expect(board[0][0]).toBe(0);
+        expect(board[1][0]).toBe(0);
+        expect(board[2][0]).toBe(2);
+        expect(board[3][0]).toBe(4);
+      });
+
+      it('should merge tiles moving down', () => {
+        game.setBoardForTesting([
+          [2, 0, 0, 0],
+          [2, 0, 0, 0],
+          [4, 0, 0, 0],
+          [4, 0, 0, 0]
+        ]);
+
+        game.makeMove('down');
+        const board = game.getBoard();
+
+        expect(board[2][0]).toBe(4);
+        expect(board[3][0]).toBe(8);
+      });
+    });
+  });
+
+  describe('isGameOver', () => {
+    it('should return false when moves are available', () => {
+      game.setBoardForTesting([
+        [2, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ]);
+
+      expect(game.isGameOver()).toBe(false);
+    });
+
+    it('should return true when no moves are possible', () => {
+      game.setBoardForTesting([
+        [2, 4, 2, 4],
+        [4, 2, 4, 2],
+        [2, 4, 2, 4],
+        [4, 2, 4, 2]
+      ]);
+
+      expect(game.isGameOver()).toBe(true);
+    });
+  });
+
+  describe('win condition in makeMove', () => {
+    it('should set hasWon to true when 2048 is reached', () => {
+      game.setBoardForTesting([
+        [1024, 1024, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ]);
+
+      const result = game.makeMove('left');
+
+      expect(result.hasWon).toBe(true);
+      expect(result.board[0][0]).toBe(2048);
+    });
+
+    it('should only set hasWon once', () => {
+      game.setBoardForTesting([
+        [2048, 2, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ]);
+
+      game['hasWon'] = true;
+      const result = game.makeMove('left');
+
+      expect(result.hasWon).toBe(true);
+    });
+  });
+
+  describe('edge cases', () => {
+    it('should handle complex merge scenarios', () => {
+      game.setBoardForTesting([
+        [2, 0, 2, 4],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ]);
+
+      game.makeMove('left');
+      const board = game.getBoard();
+
+      expect(board[0][0]).toBe(4);
+      expect(board[0][1]).toBe(4);
+    });
+
+    it('should not merge already merged tiles [4,2,2,0] -> [4,4,0,0]', () => {
+      game.setBoardForTesting([
+        [4, 2, 2, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ]);
+
+      game.makeMove('left');
+      const board = game.getBoard();
+
+      expect(board[0][0]).toBe(4);
+      expect(board[0][1]).toBe(4);
+      expect(board[0][2]).toBe(0);
+      expect(board[0][3]).toBe(0);
+    });
+
+    it('should handle all tiles being the same value', () => {
+      game.setBoardForTesting([
+        [8, 8, 8, 8],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ]);
+
+      game.makeMove('left');
+      const board = game.getBoard();
+
+      expect(board[0][0]).toBe(16);
+      expect(board[0][1]).toBe(16);
+      expect(board[0][2]).toBe(0);
+      expect(board[0][3]).toBe(0);
+    });
+  });
 });
