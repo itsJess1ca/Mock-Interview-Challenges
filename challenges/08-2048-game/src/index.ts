@@ -1,21 +1,18 @@
 import { Game2048 } from './game2048';
-import {
-  displayGameState,
-  displayInstructions,
-  clearScreen,
-  displayWinMessage,
-  displayGameOverMessage,
-  displayBoard,
-} from './display';
-import { setupInput, teardownInput, enableRawMode, disableRawMode, keyToDirection, isSpecialCommand } from './input';
+import { DisplayManager } from './display';
+import { InputHandler } from './input';
 import { Direction } from './types';
 
 class GameController {
   private game: Game2048;
+  private display: DisplayManager;
+  private input: InputHandler;
   private isRunning: boolean;
 
   constructor() {
     this.game = new Game2048();
+    this.display = new DisplayManager();
+    this.input = new InputHandler();
     this.isRunning = false;
   }
 
@@ -24,8 +21,10 @@ class GameController {
    */
   start(): void {
     // TODO: Implement this function
-    // 1. Show initial game state (instructions + board)
-    // 2. Set up input handling with callbacks for move, quit, restart
+    // 1. Show initial game state using showInitialState()
+    // 2. Set up input handling: this.input.setup(callbacks...)
+    //    - Pass handleMove, handleQuit, handleRestart as callbacks
+    //    - Remember to bind them: this.handleMove.bind(this)
     throw new Error('Not implemented');
   }
 
@@ -34,25 +33,26 @@ class GameController {
    */
   private handleMove(direction: Direction): void {
     // TODO: Implement this function
-    // 1. Call game.makeMove with the direction
-    // 2. Update the display to show new board state
+    // 1. Call this.game.makeMove(direction)
+    // 2. Call this.updateDisplay() to refresh the screen
     throw new Error('Not implemented');
   }
 
   private handleRestart(): void {
     // TODO: Implement this function
-    // 1. Clear the screen
-    // 2. Teardown input handling
-    // 3. Create a new game instance
-    // 4. Restart the game
+    // 1. Call this.display.clear()
+    // 2. Call this.input.teardown()
+    // 3. Create new Game2048 instance: this.game = new Game2048()
+    // 4. Set this.isRunning = false
+    // 5. Call this.start() to restart
     throw new Error('Not implemented');
   }
 
   private handleQuit(): void {
     // TODO: Implement this function
-    // 1. Teardown input handling
-    // 2. Display game over message
-    // 3. Exit the process
+    // 1. Call this.input.teardown()
+    // 2. Call this.display.showGameOverMessage()
+    // 3. Call process.exit()
     throw new Error('Not implemented');
   }
 
@@ -61,9 +61,9 @@ class GameController {
    */
   private updateDisplay(): void {
     // TODO: Implement this function
-    // 1. Clear the screen
-    // 2. Get current game state from game
-    // 3. Display the game state
+    // 1. Call this.display.clear()
+    // 2. Get game state: this.game.getGameState()
+    // 3. Call this.display.showGameState(gameState)
     throw new Error('Not implemented');
   }
 
@@ -72,7 +72,7 @@ class GameController {
    */
   private shouldContinue(): boolean {
     // TODO: Implement this function
-    // Return whether the game should continue running
+    // Return this.isRunning
     throw new Error('Not implemented');
   }
 
@@ -81,8 +81,8 @@ class GameController {
    */
   private showInitialState(): void {
     // TODO: Implement this function
-    // 1. Display game instructions
-    // 2. Display initial game state (board with 2 random tiles)
+    // 1. Call this.display.showInstructions()
+    // 2. Get game state and call this.display.showGameState(...)
     throw new Error('Not implemented');
   }
 }
@@ -96,14 +96,15 @@ function main(): void {
 }
 
 // Handle process termination gracefully
+const input = new InputHandler();
 process.on('SIGINT', () => {
-  teardownInput();
+  input.teardown();
   console.log('\n👋 Thanks for playing 2048!');
   process.exit(0);
 });
 
 process.on('SIGTERM', () => {
-  teardownInput();
+  input.teardown();
   process.exit(0);
 });
 
