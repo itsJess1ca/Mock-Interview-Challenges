@@ -6,7 +6,6 @@ import { Board, GameState, CellValue } from './types';
 export function displayBoard(board: Board): void {
   // TODO: Implement this function
   // Display the board in a nice ASCII format
-  // You can use the TileColors for visual representation
   // Example output:
   // ┌────┬────┬────┬────┐
   // │ 2  │ 4  │    │ 2  │
@@ -17,22 +16,7 @@ export function displayBoard(board: Board): void {
   // ├────┼────┼────┼────┤
   // │ 4  │ 2  │ 4  │ 2  │
   // └────┴────┴────┴────┘
-  console.log('┌────┬────┬────┬────┐');
-  let isFirst = true;
-  for (const row of board) {
-    if (!isFirst) console.log('├────┼────┼────┼────┤');
-    let rowStr = '│';
-    const cellValues: string[] = [];
-    for (const cell of row) {
-      cellValues.push(formatCellValue(cell));
-    }
-
-    rowStr += cellValues.join('│');
-    rowStr += '│';
-    console.log(rowStr);
-    isFirst = false;
-  }
-  console.log('└────┴────┴────┴────┘')
+  throw new Error('Not implemented');
 }
 
 /**

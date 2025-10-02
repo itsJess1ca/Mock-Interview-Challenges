@@ -23,62 +23,67 @@ class GameController {
    * Start the game
    */
   start(): void {
-    // 1. Show instructions
-    // 2. Set up input handling
-    // 3. Start the game loop
-    // 4. Handle cleanup on exit
-    this.showInitialState()
-    setupInput(
-      this.handleMove.bind(this),
-      this.handleQuit.bind(this),
-      this.handleRestart.bind(this)
-    );
+    // TODO: Implement this function
+    // 1. Show initial game state (instructions + board)
+    // 2. Set up input handling with callbacks for move, quit, restart
+    throw new Error('Not implemented');
   }
 
   /**
    * Handle player move
    */
   private handleMove(direction: Direction): void {
-    this.game.makeMove(direction);
-    this.updateDisplay();
+    // TODO: Implement this function
+    // 1. Call game.makeMove with the direction
+    // 2. Update the display to show new board state
+    throw new Error('Not implemented');
   }
 
   private handleRestart(): void {
-    clearScreen();
-    teardownInput();
-    this.game = new Game2048();
-    this.isRunning = false;
-    this.start();
+    // TODO: Implement this function
+    // 1. Clear the screen
+    // 2. Teardown input handling
+    // 3. Create a new game instance
+    // 4. Restart the game
+    throw new Error('Not implemented');
   }
 
   private handleQuit(): void {
-    teardownInput();
-    displayGameOverMessage();
-    process.exit();
+    // TODO: Implement this function
+    // 1. Teardown input handling
+    // 2. Display game over message
+    // 3. Exit the process
+    throw new Error('Not implemented');
   }
 
   /**
    * Update the game display
    */
   private updateDisplay(): void {
-    // Clear screen and show current game state
-    clearScreen();
-    displayGameState(this.game.getGameState());
+    // TODO: Implement this function
+    // 1. Clear the screen
+    // 2. Get current game state from game
+    // 3. Display the game state
+    throw new Error('Not implemented');
   }
 
   /**
    * Check if the game should continue running
    */
   private shouldContinue(): boolean {
-    return this.isRunning;
+    // TODO: Implement this function
+    // Return whether the game should continue running
+    throw new Error('Not implemented');
   }
 
   /**
    * Display initial game state
    */
   private showInitialState(): void {
-    displayInstructions();
-    displayGameState(this.game.getGameState());
+    // TODO: Implement this function
+    // 1. Display game instructions
+    // 2. Display initial game state (board with 2 random tiles)
+    throw new Error('Not implemented');
   }
 }
 

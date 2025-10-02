@@ -25,15 +25,13 @@ npm test       # Run tests to see what needs implementation
 
 ## What's Already Provided ✅
 
-- **Display System (`src/display.ts`)** - Complete terminal UI and board rendering
-- **Input Handling (`src/input.ts`)** - Keyboard input with WASD/arrow key support
-- **Game Controller (`src/index.ts`)** - Main game loop and coordination
+- **Input Handling (`src/input.ts`)** - Complete keyboard input with WASD/arrow key support, raw mode stdin handling
 - **Comprehensive Tests (`src/__tests__/`)** - 45 tests covering all game mechanics
-- **Helper Methods** - Board getters, reset functionality, testing utilities
+- **Type Definitions (`src/types.ts`)** - All TypeScript interfaces and types
 
 ## What You Need to Implement 🎯
 
-### Core Game Logic (`src/game2048.ts`)
+### 1. Core Game Logic (`src/game2048.ts`)
 
 You need to implement **ALL methods** in the Game2048 class:
 
@@ -70,6 +68,28 @@ You need to implement **ALL methods** in the Game2048 class:
 11. **`getGameState()`** - Return complete game state
 12. **`getScore()`** - Return current score
 13. **`reset()`** - Reset game to initial state
+
+### 2. Display System (`src/display.ts`)
+
+Implement board rendering and UI messages:
+
+1. **`displayBoard(board)`** - Render the 4x4 board with ASCII art
+2. **`displayGameState(gameState)`** - Show board, score, and status
+3. **`displayInstructions()`** - Show game rules and controls
+4. **`clearScreen()`** - Clear the terminal
+5. **Display helper functions** - Cell formatting, separators, colors
+
+### 3. Game Controller (`src/index.ts`)
+
+Implement the GameController class to coordinate everything:
+
+1. **`start()`** - Initialize and start the game
+2. **`handleMove(direction)`** - Process player moves
+3. **`handleRestart()`** - Reset and restart the game
+4. **`handleQuit()`** - Clean exit
+5. **`updateDisplay()`** - Refresh the game display
+6. **`showInitialState()`** - Display instructions and initial board
+7. **`shouldContinue()`** - Check if game should keep running
 
 ## Game Rules
 
